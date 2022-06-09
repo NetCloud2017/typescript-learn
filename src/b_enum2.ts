@@ -90,7 +90,15 @@ let g1: G = G.b; //只能赋 G.a 或 G.b; // 字符串的枚举它的取值只�
 let g2: G.a;
 
 // 作业
-function initByRole(role: E) {
+enum myRole {
+    a,
+    b, 
+    c,
+    d,
+    e,
+    f,
+}
+function initByRole(role: myRole) {
     if (role === 1 || role === 2) {
         // do sth
     } else if (role === 3 || role == 4) {

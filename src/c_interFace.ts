@@ -75,11 +75,42 @@ let chars: StringArray = ["a", "b"];
 interface Nnmes {
     // 用任意的字符串去索引 Names 都会得到一个 string；
     [x: string]: string; // 但是这样不能被允许声明一个 number类型的成员了
-    // y:number; 
+    // y:number;
     // 两种索引签名是可以混用 的；如下定义一个数字索引签名
     // 数字索引签名的返回值一定要是字符串索引签名返回值的子类型
     // [z:number]: number; 这样 会报错 ， 若是 改为[x:string]: any; 就可以了；
-    [z:number]: string;
-
-
+    [z: number]: string;
 }
+
+// 定义 函数
+// let add: (x: number, y: number) => number;
+// 接口定义函数
+// interface Add {
+//     (x: number, y: number): number;
+// }
+// 类型别名定义函数
+// type Add = (x: number, y: number) => number;
+// let add: Add = (a, b) => a + b;
+
+// 混合类型接口
+
+interface Lib {
+    (): void; // 函数
+    version: string; // 属性
+    doSomething(): void; // 方法
+}
+
+function createLib() {
+    // 放在外面的 问题是对全局暴露一个 变量 lib;
+    // 定义多个lib
+
+    let lib: Lib = (() => {}) as Lib;
+    lib.version = "1";
+    lib.doSomething = () => {};
+    return lib;
+}
+
+let lib1 = createLib();
+lib1();
+lib1.doSomething();
+let lib2 = createLib();

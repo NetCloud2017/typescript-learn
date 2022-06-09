@@ -16,7 +16,7 @@ let abc:string= 'name';
 
 //数组 
 let arr1:Array<string> =['abc', 'd', 'e'];
-let arr2:Array[number] =[23, '23', false];
+let arr2:Array[] =[23, '23', false];
 // 联合类型
 let arr3:Array<string|number> =['abc', 'd', 'e'];
 
