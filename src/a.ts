@@ -16,7 +16,7 @@ let abc:string= 'name';
 
 //数组 
 let arr1:Array<string> =['abc', 'd', 'e'];
-let arr2:Array[] = [23, '23', false];
+let arr2:Array[number] =[23, '23', false];
 // 联合类型
 let arr3:Array<string|number> =['abc', 'd', 'e'];
 
@@ -47,7 +47,7 @@ compute =(a, b) => a + b;
 let obj: object = {x: 1, y: 2} 
 // 这里只是定义了它是object类型但是美说明它应该包含哪些属性
 // 所以直接修改会失败
-obj.x = 3; // 修改失败/
+// obj.x = 3; // Error 修改失败/
 // 应该这样声明
 let obj2: {x:number; y:number} = {
     x: 1, 
