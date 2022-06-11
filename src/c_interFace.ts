@@ -114,3 +114,41 @@ let lib1 = createLib();
 lib1();
 lib1.doSomething();
 let lib2 = createLib();
+
+/*
+类型别名和 接口的区别
+大多数情况下是相同的
+
+接口 可以通过从新定义接口或 extends 字段拓展接口字段， 
+而 类型别名 type  不可以通过从新定义 来增加字段 只能用 & 符号
+拓展字段
+*/
+
+interface Animal {
+    name: string;
+}
+
+interface Animal {
+    action: Function;
+}
+interface Bear extends Animal {
+    hoppies: string;
+}
+const bear: Bear = {
+    name: "halokity",
+    hoppies: "honey",
+    action: function () {},
+};
+
+type Fish = {
+    name: string;
+};
+
+type Goldfish = Fish & {
+    love: string;
+};
+
+const fish: Goldfish = {
+    name: "lulu",
+    love: "swimming",
+};
