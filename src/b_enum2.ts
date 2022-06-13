@@ -9,7 +9,7 @@ enum Role {
 }
 // 数字枚举可以反向映射
 /*
- 成员的key  和 value 都作为了 key 和 value；
+ 成员的key  和 value 都作为了 key 和 value；    
  obj[obj['abc'] = 1] = 'abc'
  {1: 'abc', abc: 1}
 */
