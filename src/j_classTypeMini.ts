@@ -31,6 +31,34 @@ function getUsersOnlineMessage(numUsersOnline: number) {
     return "现在没有人在线.：（";
 }
 
-
 // 等值缩小
 // typescript 也可以用 === ， ！== ， == ， ！=   来做等值检测；实现类型缩小
+
+interface Container {
+    value: number | undefined | null;
+}
+function multiplyValue(container: Container, factor: number) {
+    if (container.value !== null) {
+        console.log(container.value);
+        container.value;
+    }
+}
+multiplyValue({ value: 5 }, 6);
+multiplyValue({ value: undefined }, 6);
+multiplyValue({ value: null }, 6);
+// multiplyValue({ value: '5'},6)
+
+// in 操作符缩小 用于确定对象有没有这个属性 ；
+
+type Fishs = { swim: () => void };
+type Bird = { fly: () => void };
+type Human = { swim?: () => void; fly?: () => void };
+function move(animal: Fish | Bird | Human) {
+    if ("swim" in animal) {
+        // animal: Fish / Human
+        // animal as Fishs 类型断言 
+        return (animal as Fishs).swim();
+    }
+    // animal: Bird | Numan
+    return (animal as Bird).fly();
+}
