@@ -56,9 +56,21 @@ type Human = { swim?: () => void; fly?: () => void };
 function move(animal: Fish | Bird | Human) {
     if ("swim" in animal) {
         // animal: Fish / Human
-        // animal as Fishs 类型断言 
+        // animal as Fishs 类型断言
         return (animal as Fishs).swim();
     }
     // animal: Bird | Numan
     return (animal as Bird).fly();
 }
+
+// instanceof 操作符 类型缩小；
+
+function logValue(x: Date | string) {
+    if (x instanceof Date) {
+        console.log(x.toUTCString());
+    } else {
+        console.log(x.toUpperCase());
+    }
+}
+logValue(new Date());
+logValue("hello ts");
