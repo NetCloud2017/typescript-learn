@@ -74,3 +74,8 @@ function logValue(x: Date | string) {
 }
 logValue(new Date());
 logValue("hello ts");
+
+
+// 分配缩小 ： 当给变量赋值的时候， ts会检测 赋值的右侧， 并适当缩小左侧；
+let xx = Math.random() < 0.5 ? 10 : "hello world!";
+// 上面的相当于给 xx 确定类型为string  或 number； let xx: string | number
