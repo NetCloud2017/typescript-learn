@@ -161,8 +161,22 @@ const d2 = makeDate(5, 6, 7);
 // 重载签名和实现签名的三个问题
 
 // 1、参数不正确
+function fnn(x: string): void;
+function fnn() {
+    // 实现函数 这里没有参数 ，为啥调用是不传参数会报错呢？
+    // 因为在调用函数时， 是看不到实现函数里面的参数的， 只能看到重载签名函数的参数约束。
+}
+// fnn() // 这里会报错
+fnn("hello");
 
 // 2、参数类型不正确
+function fnn2(x: boolean): void;
+function fnn2(x: string): void;
+function fnn2(x: boolean | string) {} // 参数兼容重载函数的参数
 
 // 3、返回类型不正确
-
+function fnn3(x: string): string;
+function fnn3(x: boolean): boolean;
+function fnn3(x: string | boolean): string | boolean { // 返回值兼容
+    return "hello";
+}
