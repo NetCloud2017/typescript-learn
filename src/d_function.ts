@@ -104,7 +104,6 @@ function fn3(date: CallOrConstructor) {
     let n = date(100);
 
     console.log(d, n);
-    
 }
 
 // function CreateDate(s: string, n?: number) {
@@ -115,8 +114,6 @@ function fn3(date: CallOrConstructor) {
 // }
 
 // fn3(CreateDate)
-
-
 
 /*
 函数重载
@@ -158,6 +155,26 @@ function fnn2(x: boolean | string) {} // 参数兼容重载函数的参数
 // 3、返回类型不正确
 function fnn3(x: string): string;
 function fnn3(x: boolean): boolean;
-function fnn3(x: string | boolean): string | boolean { // 返回值兼容
+function fnn3(x: string | boolean): string | boolean {
+    // 返回值兼容
     return "hello";
 }
+
+// 编写好重载
+// 1、在可能的情况下，总是倾向于使用联合类型的参数而不是重载参数
+
+// function len(s: string): number;
+// function len(arr: any[]): number;
+// function len(x: any) {
+//     return x.length;
+// }
+function len(x: any[] | string) {
+    return x.length;
+}
+
+len("hello");
+len([1, 2, 3]);
+len(Math.random() > 0.5 ? "hello" : [4, 5, 6]); // 这样前面注释的就报错
+
+
+
