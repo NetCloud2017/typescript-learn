@@ -25,3 +25,19 @@ function map<Input, Output>(
     return arr.map(func);
 }
 const parsed = map(["1", "2", "3"], (n) => parseInt(n));
+
+// 泛型函数的限制条件 extends 关键字
+/*
+    <Type extends { length: number }>
+    意思是 参数a  或 b  必须具有 length 这个属性， 且它的值时number 类型；
+*/
+function longest<Type extends { length: number }>(a: Type, b: Type) {
+    if (a.length >= b.length) {
+        return a;
+    } else {
+        return b;
+    }
+}
+const longerArray = longest([1, 2], [2, 3, 4]);
+const longerString = longest("felix", "lu");
+// const notOk = longest(10, 100); 报错
