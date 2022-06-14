@@ -58,3 +58,13 @@ const longerString = longest("felix", "lu");
     const arr = minimumLength([1, 2, 3], 6);
     console.log(arr.slice(0));
 */
+
+// 如何指定类型参数
+
+function combine<Type>(arr1: Type[], arr2: Type[]): Type[] {
+    return arr1.concat(arr2);
+}
+
+// const arr = combine(["string"], [1, 2, 3]); //这样会报错 需要手动指定类型参数
+const arr = combine<string | number>(["string"], [1, 2, 3]);
+console.log(arr);
