@@ -41,3 +41,20 @@ function longest<Type extends { length: number }>(a: Type, b: Type) {
 const longerArray = longest([1, 2], [2, 3, 4]);
 const longerString = longest("felix", "lu");
 // const notOk = longest(10, 100); 报错
+
+// 使用通用约束条件的常见错误
+/*
+    function minimumLength<Type extends { length: number }>(
+        obj: Type,
+        minimum: number
+    ): Type {
+        // 泛型 Type 是 Array , 但是返回的 却是  object
+        if (obj.length >= minimum) {
+            return obj;
+        } else {
+            return { length: minimum };
+        }
+    }
+    const arr = minimumLength([1, 2, 3], 6);
+    console.log(arr.slice(0));
+*/
