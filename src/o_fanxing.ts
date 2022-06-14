@@ -16,7 +16,7 @@ const s = firstElement<string>(["a", "b", "c"]); //s是'string'类型 <这里声
 const n = firstElement<number>([1, 2, 3]); // n是'number'类型
 const u = firstElement<undefined>([]); // u是undefined类型
 
-// 同时使用多个泛型
+// 同时使用多个泛型 用 逗号隔开；
 // Input 是 string 类型 ， Output 是 number 类型
 function map<Input, Output>(
     arr: Input[],
@@ -68,3 +68,50 @@ function combine<Type>(arr1: Type[], arr2: Type[]): Type[] {
 // const arr = combine(["string"], [1, 2, 3]); //这样会报错 需要手动指定类型参数
 const arr = combine<string | number>(["string"], [1, 2, 3]);
 console.log(arr);
+
+/*
+
+  编写优秀通用函数的准则
+1、可能的情况下，使用类型参数本身，而不是对其进行约束
+
+
+2、总是尽可能少地使用类型参数
+3、如果一个类型的参数只出现在一个地方，请重新考虑你是否真的需要它
+类型参数是用来关联过个值的类型的，只使用了一次那就没有必要定义
+
+ */
+
+// 规则1
+function firstElement1<Type>(arr: Type[]) {
+    return arr[0];
+}
+function firstElement2<Type extends any[]>(arr: Type) {
+    // Type被 any[] 约束了
+    return arr[0];
+}
+const a = firstElement1([1, 2, 3]);
+const b = firstElement2([1, 2, 3]);
+
+// 规则 2
+function filter1<Type>(arr: Type[], func: (arg: Type) => boolean) {
+    return arr.filter(func);
+}
+
+function filter2<Type, Func extends (arg: Type) => boolean>(
+    arr: Type[],
+    func: Func
+) {
+    // Func 类型参数就是约束了一下为函数 ， 没有干其他用处。 所以可以尽可能少用类型参数
+    return arr.filter(func);
+}
+
+// 规则3
+function greet<Str extends string>(s: Str) {
+    console.log("Hello," + s);
+}
+greet("World");
+function greet2(s: string) {
+    console.log("Hello," + s);
+}
+
+// 可选参数
