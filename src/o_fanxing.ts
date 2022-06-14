@@ -114,4 +114,28 @@ function greet2(s: string) {
     console.log("Hello," + s);
 }
 
-// 可选参数
+// 可选参数 和 默认值
+function selectableArg(num?: number) {
+    // 可选参数和 默认值不能同时在同一个值上使用
+    // function selectableArg(num: number = 100) {
+}
+
+// 回调函数中的可选参数
+
+function myForEach(arr: any[], callback: (arg: any, index?: number) => void) {
+    for (let i = 0; i < arr.length; i++) {
+        // callback(arr[i], i)
+        callback(arr[i]);
+    }
+}
+// myForEach([1, 2, 3],(a) ⇒ console.log(a))
+// myForEach([1, 3, 4], (a, i) ⇒ console.log(a, i))
+myForEach([1, 2, 3], (a, i) => {
+    /*
+        当为为回调写一个函数的时候， 永远不要写可选参数， 除非不传递该参数就不调用该函数
+    */
+    // console.log(i.toFixed()); // 这里报错 ，因为 i 是可选参数
+});
+
+
+//
