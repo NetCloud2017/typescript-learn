@@ -176,5 +176,37 @@ len("hello");
 len([1, 2, 3]);
 len(Math.random() > 0.5 ? "hello" : [4, 5, 6]); // 这样前面注释的就报错
 
+// 函数内的 this 声明
+/*
+ts 会通过代码流分析来推断 函数内的this 是什么、 
+在js 中 我们是不能用this 这个参数名的，而在ts中我们是可以使用这个语法空间的
+它允许我们使用this 这个参数的名字， 同时还可以给this 指定它的类型
+*/
 
+interface User {
+    admin: boolean;
+}
+interface DB {
+    filterUsers(filter: (this: User) => boolean): User[];
+}
+const db: DB = {
+    filterUsers: (filter: (this: User) => boolean) => {
+        let user1: User = {
+            admin: true,
+        };
+        let user2: User = {
+            admin: false,
+        };
+        return [user1, user2];
+    },
+};
 
+const admins = db.filterUsers(function (this: User) {
+    return this.admin;
+});
+
+// const admins = db.filterUsers((this: User) => {
+//     // 报错 箭头函数是 不能包含this这个参数的
+//     return this.admin;
+// });
+console.log(admins);
