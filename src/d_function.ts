@@ -46,6 +46,7 @@ greeter(printToLog);
 type DescribableFunction = {
     discription: string;
     // （someArg) 代表函数 func1 的传参类型 返回值是布尔类型
+    // 调用签名
     (someArg: number): boolean;
 };
 
@@ -61,3 +62,56 @@ function func1(n: number) {
 func1.discription = "66666";
 
 doSomeThing(func1);
+
+// 构造签名
+/*
+    
+*/
+
+class Ctor {
+    s: string;
+    constructor(s: string) {
+        this.s = s;
+    }
+}
+
+type NewFunc = {
+    // 构造签名
+    new (s: string): Ctor;
+};
+
+function fn2(ctor: NewFunc) {
+    return new ctor("hello");
+}
+
+const instance = fn2(Ctor);
+console.log(instance.s); // hello
+
+// 调用签名和 构造签名混合使用
+
+/*
+
+https://cn.bing.com/search?q=interface%20CallOrConstructor%20%7B%20%20%20%20%20new%20(s%3A%20string)%3A%20Date%3B%20%20%20%20%20(n%3F%3A%20number)%3A%20number%3B%20%7D
+
+*/
+interface CallOrConstructor {
+    // 不知道什么样的对象才符合这个接口
+    new (s: string): Date;
+    (n?: number): number;
+}
+function fn3(date: CallOrConstructor) {
+    let d = new date("2021-12-20");
+    let n = date(100);
+
+    console.log(d, n);
+    
+}
+
+// function CreateDate(s: string, n?: number) {
+//     if (typeof n === "number") {
+//         return n ** 2;
+//     }
+//     return new Date(s);
+// }
+
+// fn3(CreateDate)
