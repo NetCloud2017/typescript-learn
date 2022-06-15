@@ -137,3 +137,56 @@ myForEach([1, 2, 3], (a, i) => {
     // console.log(i.toFixed()); // 这里报错 ，因为 i 是可选参数
 });
 
+// interface Box<Type> {
+//     contents: Type;
+// }
+// interface Apple {}
+// let aa: Apple = {};
+// type AppleBox = Box<Apple>; // ApplyBox 就是 Box<Apple>
+// let ab: AppleBox = {
+//     contents: aa,
+// };
+
+// type 定义泛型
+
+type Box<Type> = {
+    contents: Type;
+};
+type OrNull<Type> = Type | null;
+type OneOrMany<Type> = Type | Type[];
+
+type OneOrManyOrNull<Type> = OrNull<OneOrMany<Type>>; // 相当于 Type | Type[] | null
+type OneOrManyOrNul1String = OneOrManyOrNull<string>; //  string | string[] | null
+
+// 类型操纵 可以用其他的类型术语来表达类型
+
+// 如何从类型中创建类型
+
+/*
+    我们可以通过各种类型操作符， 用一种简洁的， 可维护的方式来表达复杂的操作和值
+    //   用现有的类型 或者是值来表达一个新的类型的方法
+*/
+
+// 1、 泛型类型
+function identity<Type>(arg: Type): Type {
+    return arg;
+}
+let output = identity<string>("myString");
+
+function loggingIdentity<Type>(arg: Array<Type>): Type[] { // Array<Type> 参数是 Array , 参数元素是泛型，当前type 是 number 
+    console.log(arg.length);
+    return arg;
+}
+loggingIdentity([100, 200]);
+
+// 2、 keyof 类型操作符
+
+// 3、 typeof  类型操作符
+
+// 4、 索引访问类型
+
+// 5、 条件类型
+
+// 6、 映射类型
+
+// 7、 模板字面量类型
