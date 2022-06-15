@@ -168,16 +168,79 @@ type OneOrManyOrNul1String = OneOrManyOrNull<string>; //  string | string[] | nu
 */
 
 // 1、 泛型类型
-function identity<Type>(arg: Type): Type {
-    return arg;
-}
-let output = identity<string>("myString");
+// function identity<Type>(arg: Type): Type {
+//     return arg;
+// }
+// let output = identity<string>("myString");
 
-function loggingIdentity<Type>(arg: Array<Type>): Type[] { // Array<Type> 参数是 Array , 参数元素是泛型，当前type 是 number 
-    console.log(arg.length);
+// function loggingIdentity<Type>(arg: Array<Type>): Type[] { // Array<Type> 参数是 Array , 参数元素是泛型，当前type 是 number
+//     console.log(arg.length); // 不定义泛型为数组时 ，会报错
+//     return arg;
+// }
+// loggingIdentity([100, 200]);
+
+function identity<Type>(arg: Type): Type {
+    // 泛型函数声明
     return arg;
 }
-loggingIdentity([100, 200]);
+// let myIdentity: <Type>(arg: Type) => Type = identity;   // 泛型函数字面量
+// let myIdentity: <Input>(arg: Input) => Input = identity; // Type 的名字不用和 identity 的一致， 只要命名是一一对应既可
+// let myIdentity: { <Type>(arg: Type): Type } = identity; // 也可以用对象字面量的形式定义
+// interface GenericIdentityFn {
+//     // 泛型接口
+//     <Type>(arg: Type): Type; // <Type>(arg: Type) 相当于函数的命名部分 , 后面的 :<Type> 是声明函数的返回值
+// }
+// let myIdentity: GenericIdentityFn = identity;
+interface GenericIdentityFn<Type> {
+    (arg: Type): Type;
+}
+let myIdentity: GenericIdentityFn<string> = identity; // 确定泛型参数类型
+// myIdentity(123) //   会报错
+myIdentity("123");
+
+// 泛型类
+
+class GenericNumber<NumType> {
+    //类的 属性和 方法 初始化没有明确赋值会报错，可以设置 "strictPropertyInitialization": false,
+    zeroValue: NumType;
+    add: (x: NumType, y: NumType) => NumType;
+}
+// let myGeneric = new GenericNumber<number>();
+// myGeneric.zeroValue = 0;
+// myGeneric.add = function (x, y) {
+//     return x + y;
+// };
+let myGeneric = new GenericNumber<string>();
+myGeneric.zeroValue;
+myGeneric.add = function (x, y) {
+    return x + y;
+};
+
+// 泛型约束
+
+interface Lengthwise {
+    length: number;
+}
+function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
+    console.log(arg.length); // 这样也可以确保 arg 这个参数拥有 length 这个属性；
+    return arg;
+}
+loggingIdentity(["hello", "world"]);
+
+// 在泛型约束中使用类型参数
+
+function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
+    //  Key 用 keyof  约束 为 属于 Type 里面的某个 key
+    return obj[key];
+}
+let c = {
+    a: 1,
+    b: 2,
+    c: 3,
+    d: 4,
+};
+getProperty(c, "a");
+// getproperty(c, "m"); 报错
 
 // 2、 keyof 类型操作符
 
