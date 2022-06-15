@@ -253,14 +253,42 @@ class Lion extends Animal {
     keeper: string = "gogo";
 }
 class BeeKeeper {
-    name: '6666'
+    name: "6666";
 }
-function createInstance<A extends Animal>(c: new () => A): A { // new () => A) 表示传进来的是一个类， 
-   // <A extends Animal> A 继承于 Animal 的 泛型 ，因此 传入的类 需要具有 Animal 的属性；
+function createInstance<A extends Animal>(c: new () => A): A {
+    // new () => A) 表示传进来的是一个类，
+    // <A extends Animal> A 继承于 Animal 的 泛型 ，因此 传入的类 需要具有 Animal 的属性；
     return new c();
 }
 createInstance(Lion).keeper;
 createInstance(Bee).keeper;
+
+//  keyof  操作符
+
+// type QQ = {
+//     x: string;
+//     y: string;
+// };
+
+// type Keys = keyof QQ; // 将 QQ的key 作为一个 类型 且值 是string
+
+// const j: Keys = "x";
+// // const k: Keys = 'w' 报错
+
+type Arrayish = {
+    [n: number]: unknown;
+};
+type AA = keyof Arrayish;
+const a1: AA = 0;
+type Mapish = {
+    // 当 索引类型是string的时候 ，它就是 string  和 number 的联合类型 如下 可以赋 字符串也可以是 数字；
+    [k: string]: boolean;
+};
+type M = keyof Mapish;
+const m1: M = "s";
+const m2: M = 100;
+// const m3: M = true; // 索引类型只有 string 和 number；
+
 // createInstance(BeeKeeper); //  没有 Animal 的属性所以报错；
 
 // getproperty(c, "m"); 报错
