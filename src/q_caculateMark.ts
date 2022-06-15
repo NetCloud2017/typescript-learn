@@ -12,14 +12,23 @@ const arrr = [1, 2, 3];
 const arr22 = [4, 5, 6];
 arrr.push(...arr22); // [1, 2, 3, 4, 5, 6]
 
-
 // const args =[8, 5]
 // const angle = Math.atan2(...args) // 报错 扩张参数必须具有元组类型或传递给 rest 参数。
 /*
     意思是 args 被 ts 判断 为一个 number[] , 且 不确定 元素的个数， 而 Math.atan2 函数只能传两个参数
     因此要将 args 确定为常量
-*/ 
+*/
 
-const args = [8, 5] as const
+const args = [8, 5] as const;
 // args.push(3); 加不上去了
-const angle = Math.atan2(...args)
+const angle = Math.atan2(...args);
+
+// 参数结构
+function sum({ a, b, c }: { a: number; b: number; c: number }) { // 必须给结构参数定义 
+    console.log(a + b + c);
+}
+sum({
+    a: 10,
+    b: 3,
+    c: 9,
+});
