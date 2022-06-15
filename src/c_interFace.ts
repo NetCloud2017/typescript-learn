@@ -132,6 +132,8 @@ interface Animal {
     action: Function;
 }
 interface Bear extends Animal {
+// interface Bear extends Animal, Fish {  // 继承过个类
+
     hoppies: string;
 }
 const bear: Bear = {
