@@ -132,7 +132,7 @@ interface Animal {
     action: Function;
 }
 interface Bear extends Animal {
-// interface Bear extends Animal, Fish {  // 继承过个类
+    // interface Bear extends Animal, Fish {  // 继承过个类
 
     hoppies: string;
 }
@@ -154,3 +154,26 @@ const fish: Goldfish = {
     name: "lulu",
     love: "swimming",
 };
+
+// & 交叉类型： 主要是用于组合现有的对象类型
+
+interface Colorful {
+    color: string;
+}
+interface Circl {
+    radius: number;
+}
+type ColorfulCircle = Colorful & Circl;
+const cc: ColorfulCircle = {
+    color: "red",
+    radius: 100,
+};
+
+/*
+拓展和 交叉的区别
+1、拓展是使用 接口 用 extends 去 拓展的，而交叉 是用 type 关键字 用 & 符号来拓展的
+2、接口同名 时是 拓展原因的字段， 而type 不能同名
+
+*/
+
+
