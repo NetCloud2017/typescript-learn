@@ -240,6 +240,29 @@ let c = {
     d: 4,
 };
 getProperty(c, "a");
+
+// 在泛型中使用 类类型
+
+class Animal {
+    numLegs: number = 4;
+}
+class Bee extends Animal {
+    keeper: boolean = false;
+}
+class Lion extends Animal {
+    keeper: string = "gogo";
+}
+class BeeKeeper {
+    name: '6666'
+}
+function createInstance<A extends Animal>(c: new () => A): A { // new () => A) 表示传进来的是一个类， 
+   // <A extends Animal> A 继承于 Animal 的 泛型 ，因此 传入的类 需要具有 Animal 的属性；
+    return new c();
+}
+createInstance(Lion).keeper;
+createInstance(Bee).keeper;
+// createInstance(BeeKeeper); //  没有 Animal 的属性所以报错；
+
 // getproperty(c, "m"); 报错
 
 // 2、 keyof 类型操作符
