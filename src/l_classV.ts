@@ -110,8 +110,8 @@ const pp = new PointT();
 // console.log(p.x)
 // console.log(p.y)
 class Line extends PointT {
-    constructor () {
-        super() // ** 派生类必须要有 super 函数 否则报错
+    constructor() {
+        super(); // ** 派生类必须要有 super 函数 否则报错
         console.log(this.y);
     }
 }
@@ -119,23 +119,42 @@ class Line extends PointT {
 // 4、方法
 
 class ClassFunc {
-    x: number = 123
-    name: string = 'ok'
-    returnVal (str: string): string {
-        return this.name
+    x: number = 123;
+    name: string = "ok";
+    returnVal(str: string): string {
+        return this.name;
     }
-    scaleX (num:number) {
-        this.x *= num
+    scaleX(num: number) {
+        this.x *= num;
     }
-    changeName(name: string) :void{
-        this.name = name
-        this.returnVal(name)
+    changeName(name: string): void {
+        this.name = name;
+        this.returnVal(name);
     }
 }
-const initC = new ClassFunc()
+const initC = new ClassFunc();
 initC.scaleX(10);
-console.log(initC.x );// 1230
+console.log(initC.x); // 1230
 
 // 5、 Getters / Setters
+// 类的特殊的推理规则
+// 1、如果存在get，但没有set，则该属性自动是只读的
+// 2、如果没有指定setter参数的类型，它将从getter的返回类型中推断出来
+// 3、访问器和设置器必须有相同的成员可见性
+class C {
+    _length = 0;
+    get length():number {
+        return this._length;
+    }
+    set length(value: string | number | boolean) {
+        // 4.3 开始 这里的value的值类型可以 和 get 返回的不一致，但是赋值时要一致。
+        let num = Number(value)
+        if(!Number.isFinite(num)) {
+            this._length = 0
+            return
+        }
+        this._length = num;
+    }
+}
 
 // 6、索引签名
