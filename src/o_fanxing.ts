@@ -415,26 +415,57 @@ let ccc = createLabel(Math.random() >= 0.5 ? " hello" : 1);
 // 条件类型约束
 // type Messageof<T> = T['message']
 // type MessageOf<T extends { message: unknown }> = T['message']
-type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
-interface Email {
-    message: string;
-}
-interface Dog {
-    bark(): void;
-}
-// type EmaiMessageContents = string
-type EmailMessageContents = MessageOf<Email>;
-const emc: EmailMessageContents = "balabala . ";
-// DogMessageContents = never
-type DogMessageContents = MessageOf<Dog>;
-const dmc: DogMessageContents = "error" as never; // 断言 为一个 never 类型
+// type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
+// interface Email {
+//     message: string;
+// }
+// interface Dog {
+//     bark(): void;
+// }
+// // type EmaiMessageContents = string
+// type EmailMessageContents = MessageOf<Email>;
+// const emc: EmailMessageContents = "balabala . ";
+// // DogMessageContents = never
+// type DogMessageContents = MessageOf<Dog>;
+// const dmc: DogMessageContents = "error" as never; // 断言 为一个 never 类型
 
+// type Flatten<T> = T extends any[] ? T[number] : T
+// // type Str = string
+// type Str = Flatten<string[]>
+// // type Num = number
+// type Num = Flatten<number>
 
-type Flatten<T> = T extends any[] ? T[number] : T
-// type Str = string
-type Str = Flatten<string[]> 
+// 在条件类型内进行约束
+// type Flatten<Type> = Type extends Array<infer Item> ? Item : Type; // 若是 Type  受 Array 里的 Item  约束 则返回 Item , 否则返回 Type
+
+// 意思是 Type  受 infer Return 这个返回值约束 ， 返回什么它的类型就是 什么；
+type GetReturnType<Type> = Type extends (...args: never[]) => infer Return
+    ? Return
+    : never;
+
 // type Num = number
-type Num = Flatten<number>
+type Num = GetReturnType<() => number>;
+let nums: Num = 100;
+// type Str = string
+type Str = GetReturnType<(x: string) => string>;
+let str1: Str = "";
+// type Bools = boolean[]
+type Bools = GetReturnType<(a: boolean, b: boolean) => boolean[]>;
+let bools: Bools = [true, false];
+// type Never = never
+type Never = GetReturnType<string>;
+let nev: Never = "error" as never;
+
+// 注意： 当 反身是 重载函数时， 它会参看最后一个重载签名的 类型
+function stringOrNum(x: string): number;
+function stringOrNum(x: number): string;
+function stringOrNum(x: string | number): string | number;
+function stringOrNum(x: string | number): string | number {
+    return Math.random() > 0.5 ? "hello" : 23;
+}
+// type T1  = string | nunber
+type T1 = ReturnType<typeof stringOrNum>;
+// const t1: T1 = true;  // 报错
 
 // 6、 映射类型
 
