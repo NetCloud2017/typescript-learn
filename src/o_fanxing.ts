@@ -363,18 +363,54 @@ const p1: Person = {
     // alive: true,
 };
 
-type Age = typeof MyArray[number]['age']
-const age: Age = 11
-type Age2 = People['age']
-const age2: Age2 = 300
+type Age = typeof MyArray[number]["age"];
+const age: Age = 11;
+type Age2 = People["age"];
+const age2: Age2 = 300;
 
 // 只能在索引的时候使用类型， 而不能是变量引用, 如下
-const key = 'age'
+const key = "age";
 
-type Age3 = People[typeof key] //  People[key] 报错, 除非用 type key = 'age' 这样声明 key 就可以。
-
+type Age3 = People[typeof key]; //  People[key] 报错, 除非用 type key = 'age' 这样声明 key 就可以。
 
 // 5、 条件类型
+interface Animal {
+    live(): void;
+}
+interface Dog extends Animal {
+    woof(): void;
+}
+// type Examplel = number
+type Example1 = Dog extends Animal ? number : string;
+// type Example = string
+type Example2 = RegExp extends Animal ? number : string;
+// 这样写其实没多大意义， 要结合泛型写
+interface IdLabel {
+    id: number;
+}
+interface NameLabel {
+    name: string;
+}
+// function createlabel(id: number): IdLabel;
+// function createlabel(name: string): NameLabel;
+// function createlabel(nameOrId: string | number): IdLabel | NameLabel;
+// function createlabel(nameorId: string | number): IdLabel | NameLabel {
+//     // 这样 会随着 参数的类型增多，函数签名而增多， 可以用 条件类型优化
+//     throw "";
+// }
+
+type NameOrId<T extends number | string> = T extends number
+    ? IdLabel
+    : NameLabel;
+function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {
+    throw "";
+}
+// type aaa = Namelabel
+let aaa = createLabel("typescript");
+// type bbb = IdLabel
+let bbb = createLabel(2.8);
+// type ccc  = NameLabel | IdLabel
+let ccc = createLabel(Math.random() >= 0.5 ? " hello" : 1);
 
 // 6、 映射类型
 
