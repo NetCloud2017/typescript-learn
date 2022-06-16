@@ -240,6 +240,7 @@ let c = {
     d: 4,
 };
 getProperty(c, "a");
+// getproperty(c, "m"); 报错
 
 // 在泛型中使用 类类型
 
@@ -262,8 +263,10 @@ function createInstance<A extends Animal>(c: new () => A): A {
 }
 createInstance(Lion).keeper;
 createInstance(Bee).keeper;
+// createInstance(BeeKeeper); //  没有 Animal 的属性所以报错；
 
-//  keyof  操作符
+// 2、 keyof 类型操作符
+// 这操作符在映射类型组合的时候特别有用；
 
 // type QQ = {
 //     x: string;
@@ -289,15 +292,87 @@ const m1: M = "s";
 const m2: M = 100;
 // const m3: M = true; // 索引类型只有 string 和 number；
 
-// createInstance(BeeKeeper); //  没有 Animal 的属性所以报错；
-
-// getproperty(c, "m"); 报错
-
-// 2、 keyof 类型操作符
-
 // 3、 typeof  类型操作符
+// typeof 使用时要注意， 不能修复 函数调用的返回值 例如 ： typeof  func(), 一般写 修饰变量或 对象的属性；
+let str = "hello";
+let str2: typeof str = "12"; // 检测 str 的类型作为 str2 的类型；
+// str2 = 214 // 报错 , 因为不是 string 类型；
+
+/*
+预定义类型 
+ReturnType<T>
+
+ReturnType 是 TS 内置的
+*/
+type Predicate = (x: unknown) => boolean;
+type K = ReturnType<Predicate>; // 获取的 是函数返回值的类型
+let ss: K = true;
+function ff() {
+    return {
+        x: 10,
+        y: 3,
+    };
+}
+type P = ReturnType<typeof ff>;
+
+const p: P = {
+    x: 1,
+    y: 2,
+};
 
 // 4、 索引访问类型
+
+// type People = {
+//     age: number,
+//     name: string,
+//     alive: boolean
+// }
+
+// interface People {
+//     age: number
+//     name: string
+//     alive: boolean
+// }
+// type Age = People['age'] // 获取某个类型
+// let  peopleAge: Age = 234;
+// type PeopleId = People['age' | 'name'] // 获取多个类型  相当于 number | string
+
+// type N = People[keyof People] //  相当于 number | string | boolean 这三个联合类型
+
+// let n1:N = 'a'
+// n1 = 2
+// n1 = true
+// // n1 = {} error
+
+// type AliveOrName = 'alive' | 'name'
+// type I3 = People[AliveOrName] // 相当于 boolean | string
+// const I31: I3 = true
+// const I32: I3 = 'hello'
+// // const I33: 13 = 100
+
+const MyArray = [
+    { name: "Alice", age: 15 },
+    { name: "Bob", age: 23 },
+    { name: "Eve", age: 38 },
+];
+// type People ={ name: string, age: number }
+type People = typeof MyArray[number];
+const p1: Person = {
+    name: "xiaoqian",
+    age: 11,
+    // alive: true,
+};
+
+type Age = typeof MyArray[number]['age']
+const age: Age = 11
+type Age2 = People['age']
+const age2: Age2 = 300
+
+// 只能在索引的时候使用类型， 而不能是变量引用, 如下
+const key = 'age'
+
+type Age3 = People[typeof key] //  People[key] 报错, 除非用 type key = 'age' 这样声明 key 就可以。
+
 
 // 5、 条件类型
 
