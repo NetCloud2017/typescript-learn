@@ -412,6 +412,30 @@ let bbb = createLabel(2.8);
 // type ccc  = NameLabel | IdLabel
 let ccc = createLabel(Math.random() >= 0.5 ? " hello" : 1);
 
+// 条件类型约束
+// type Messageof<T> = T['message']
+// type MessageOf<T extends { message: unknown }> = T['message']
+type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
+interface Email {
+    message: string;
+}
+interface Dog {
+    bark(): void;
+}
+// type EmaiMessageContents = string
+type EmailMessageContents = MessageOf<Email>;
+const emc: EmailMessageContents = "balabala . ";
+// DogMessageContents = never
+type DogMessageContents = MessageOf<Dog>;
+const dmc: DogMessageContents = "error" as never; // 断言 为一个 never 类型
+
+
+type Flatten<T> = T extends any[] ? T[number] : T
+// type Str = string
+type Str = Flatten<string[]> 
+// type Num = number
+type Num = Flatten<number>
+
 // 6、 映射类型
 
 // 7、 模板字面量类型
