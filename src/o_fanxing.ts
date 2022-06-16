@@ -467,6 +467,21 @@ function stringOrNum(x: string | number): string | number {
 type T1 = ReturnType<typeof stringOrNum>;
 // const t1: T1 = true;  // 报错
 
+// 分布式 条件类型 ：
+//  当条件类型作用于一个通用类型的时候， 我们给定他一个联合类型， 他就变成一个分布式了
+// 例如
+// type ToArray<Type> = Type extends any ? Type[] : never; // 作用于通用类型 any 
+// type StrArrOrNumArr = ToArray<string | number>; // 给定 联合类型
+// 结果是 ： type StrArrOrNumArr =  string[] | number[] ， 这样就做了一个分布式的分发；
+
+// 非分布式条件类型
+type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never
+type StrArrOrNumArr = ToArrayNonDist<string | number> // 相当于 Array<number | string>
+let saon: StrArrOrNumArr = ['a']
+// let saon: StrArrOrNumArr = [true] // 报错
+
+
+
 // 6、 映射类型
 
 // 7、 模板字面量类型
