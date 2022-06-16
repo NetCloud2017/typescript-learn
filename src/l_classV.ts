@@ -166,3 +166,26 @@ class MyClass {
         return this[s] as boolean;
     }
 }
+
+// 类的继承
+
+// 1、 implements 继承接口
+interface A1 {}
+interface B1 {}
+// 多一个接口实现
+class CC implements A1, B1 {}
+
+interface Checkable {
+    check(name: string): boolean;
+    checkFail?: false; // 带有可选属性的 接口， 类可以不实现它；
+}
+class NameChecker implements Checkable {
+    // 实现的接口的 方法， 参数并不一定要和接口的参数类型一致， 只要保持一致既可
+    check(name: string | number | boolean): boolean {
+        return name !== "ok";
+    }
+}
+
+const namex = new NameChecker();
+
+// console.log(namex.checkFail, " ddd"); // 默认没有实现 
