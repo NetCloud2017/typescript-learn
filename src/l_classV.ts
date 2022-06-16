@@ -55,8 +55,8 @@ class Pointt {
     x = 1;
     y: number = 1;
     // 也可用 确定分配断言 或 可选操作符进行初始化
-    z!:number
-    t?: string
+    z!: number;
+    t?: string;
     // constructor() {
     //     // 也可以在这里进行初始化赋值
     //     this.x = 0;
@@ -70,6 +70,26 @@ console.log(pt.x);
 console.log(pt.y);
 
 // 2、 readonly
+
+class Greeter {
+    readonly name: string = "world";
+    constructor(otherName?: string) {
+        // constructor 这里 的赋值和 直接设置属性后赋值的区别是 
+        //  属性 后赋值是 定义初始赋值 ，constructor 赋值是由用户实例化后 赋值；
+        // 这里可以更改
+        if (otherName !== undefined) {
+            // 条件类型缩减后进行赋值
+            this.name = otherName;
+        }
+    }
+    err() {
+        // 类符方法里也是不可以更改的
+        // this.name = "Tnot ok";
+    }
+}
+const g = new Greeter("hello");
+// g.name = 'a'
+console.log(g.name);
 
 // 3、 构造器
 
