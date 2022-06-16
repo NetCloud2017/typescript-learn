@@ -74,7 +74,7 @@ console.log(pt.y);
 class Greeter {
     readonly name: string = "world";
     constructor(otherName?: string) {
-        // constructor 这里 的赋值和 直接设置属性后赋值的区别是 
+        // constructor 这里 的赋值和 直接设置属性后赋值的区别是
         //  属性 后赋值是 定义初始赋值 ，constructor 赋值是由用户实例化后 赋值；
         // 这里可以更改
         if (otherName !== undefined) {
@@ -91,7 +91,30 @@ const g = new Greeter("hello");
 // g.name = 'a'
 console.log(g.name);
 
-// 3、 构造器
+// 3、 构造器 constructor
+
+/**
+ *  这里需要注意两点：
+ *  1、构造函数不能有类型参数
+ *  2、构造函数不能有返回类型注释,如这种 ( constructor (): type {})
+ */
+class PointT {
+    x: number;
+    y: number;
+    constructor(x: number = 0, y: number = 0) {
+        this.x = x;
+        this.y = y;
+    }
+}
+const pp = new PointT();
+// console.log(p.x)
+// console.log(p.y)
+class Line extends PointT {
+    constructor () {
+        super() // ** 派生类必须要有 super 函数 否则报错
+        console.log(this.y);
+    }
+}
 
 // 4、方法
 
