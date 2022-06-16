@@ -24,7 +24,7 @@ function getSmallPet(): aFish | aBird {
         name: "goldFF",
         swim: () => {},
     };
-    return true ? bird : fish
+    return true ? bird : fish;
 }
 
 let pet = getSmallPet();
@@ -45,3 +45,36 @@ const underWater3: aFish[] = zoo.filter((pet): pet is aFish => {
     }
     return isFish(pet);
 });
+
+// 类的属性
+
+// 1、 雷属性
+
+class Pointt {
+    // 也可以在这里进行初始化赋值
+    x = 1;
+    y: number = 1;
+    // 也可用 确定分配断言 或 可选操作符进行初始化
+    z!:number
+    t?: string
+    // constructor() {
+    //     // 也可以在这里进行初始化赋值
+    //     this.x = 0;
+    //     this.y = 0;
+    // }
+}
+const pt = new Pointt();
+pt.x = 1;
+pt.y = 1;
+console.log(pt.x);
+console.log(pt.y);
+
+// 2、 readonly
+
+// 3、 构造器
+
+// 4、方法
+
+// 5、 Getters / Setters
+
+// 6、索引签名

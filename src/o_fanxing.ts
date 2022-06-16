@@ -202,6 +202,10 @@ myIdentity("123");
 
 class GenericNumber<NumType> {
     //类的 属性和 方法 初始化没有明确赋值会报错，可以设置 "strictPropertyInitialization": false,
+    // 也可以 用 可选操作符 或 确定分配断言 进行初始化
+    // zeroValue?: NumType;
+    // add!: (x: NumType, y: NumType) => NumType;
+
     zeroValue: NumType;
     add: (x: NumType, y: NumType) => NumType;
 }
@@ -254,7 +258,7 @@ class Lion extends Animal {
     keeper: string = "gogo";
 }
 class BeeKeeper {
-    name: "6666";
+    name: string = "666";
 }
 function createInstance<A extends Animal>(c: new () => A): A {
     // new () => A) 表示传进来的是一个类，
@@ -470,17 +474,15 @@ type T1 = ReturnType<typeof stringOrNum>;
 // 分布式 条件类型 ：
 //  当条件类型作用于一个通用类型的时候， 我们给定他一个联合类型， 他就变成一个分布式了
 // 例如
-// type ToArray<Type> = Type extends any ? Type[] : never; // 作用于通用类型 any 
+// type ToArray<Type> = Type extends any ? Type[] : never; // 作用于通用类型 any
 // type StrArrOrNumArr = ToArray<string | number>; // 给定 联合类型
 // 结果是 ： type StrArrOrNumArr =  string[] | number[] ， 这样就做了一个分布式的分发；
 
 // 非分布式条件类型
-type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never
-type StrArrOrNumArr = ToArrayNonDist<string | number> // 相当于 Array<number | string>
-let saon: StrArrOrNumArr = ['a']
+type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never;
+type StrArrOrNumArr = ToArrayNonDist<string | number>; // 相当于 Array<number | string>
+let saon: StrArrOrNumArr = ["a"];
 // let saon: StrArrOrNumArr = [true] // 报错
-
-
 
 // 6、 映射类型
 
