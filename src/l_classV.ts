@@ -143,18 +143,26 @@ console.log(initC.x); // 1230
 // 3、访问器和设置器必须有相同的成员可见性
 class C {
     _length = 0;
-    get length():number {
+    get length(): number {
         return this._length;
     }
     set length(value: string | number | boolean) {
         // 4.3 开始 这里的value的值类型可以 和 get 返回的不一致，但是赋值时要一致。
-        let num = Number(value)
-        if(!Number.isFinite(num)) {
-            this._length = 0
-            return
+        let num = Number(value);
+        if (!Number.isFinite(num)) {
+            this._length = 0;
+            return;
         }
         this._length = num;
     }
 }
 
 // 6、索引签名
+class MyClass {
+    // 索引签名和对象的一样
+    [s: string]: boolean | ((s: string) => boolean);
+    x = true;
+    check(s: string) {
+        return this[s] as boolean;
+    }
+}
