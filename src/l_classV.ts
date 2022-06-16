@@ -118,6 +118,24 @@ class Line extends PointT {
 
 // 4、方法
 
+class ClassFunc {
+    x: number = 123
+    name: string = 'ok'
+    returnVal (str: string): string {
+        return this.name
+    }
+    scaleX (num:number) {
+        this.x *= num
+    }
+    changeName(name: string) :void{
+        this.name = name
+        this.returnVal(name)
+    }
+}
+const initC = new ClassFunc()
+initC.scaleX(10);
+console.log(initC.x );// 1230
+
 // 5、 Getters / Setters
 
 // 6、索引签名
