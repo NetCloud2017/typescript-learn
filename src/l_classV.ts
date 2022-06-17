@@ -188,4 +188,23 @@ class NameChecker implements Checkable {
 
 const namex = new NameChecker();
 
-// console.log(namex.checkFail, " ddd"); // 默认没有实现 
+// console.log(namex.checkFail, " ddd"); // 默认没有实现
+
+// 2、 extends 继承类
+
+class AnimalC {
+    move() {
+        console.log("Moving along!");
+    }
+}
+class Dog extends AnimalC {
+    woof(times: number) {
+        for (let i = 0; i < times; i++) {
+            console.log("woof!");
+        }
+    }
+}
+const d = new Dog();
+d.move();
+
+// 
