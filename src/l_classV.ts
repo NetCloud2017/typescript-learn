@@ -207,4 +207,34 @@ class Dog extends AnimalC {
 const d = new Dog();
 d.move();
 
-// 
+//  重写方法
+// 派生类重写基类的属性或方法
+
+/**
+ *  可以用 super. 的方法访问 基类的属性和方法
+ *  因为js  是一个简单的查找对象，所以没有超级字段的概念， ts 强制要求它的派生类总是基类的一个子类型
+ */
+class Base {
+    greet() {
+        console.log("Hello World");
+    }
+}
+class Derived extends Base {
+    greet(name?: string) {
+        // 若这个 参数是必填的， 那就报错了。
+        // 子类覆盖 基类的方法 的参数要 遵守 和基类的 参数类型一致规则一致；
+        if (name === undefined) {
+            super.greet();
+        } else {
+            console.log(name.toUpperCase());
+        }
+    }
+}
+const dd = new Derived();
+dd.greet();
+dd.greet("reader");
+
+// 派生类赋值
+
+const bd: Base = dd;
+bd.greet();
