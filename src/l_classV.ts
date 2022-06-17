@@ -360,3 +360,17 @@ class Foo {
     }
 }
 // Foo.#count; 访问不了
+
+// 泛型类
+
+class Boxx<Type> {
+    contents: Type;
+    constructor(value: Type) {
+        this.contents = value;
+    }
+    // 类的静态属性是不能 应用类类型的；
+    // static defaultValue: Type;
+}
+const b1 = new Boxx<number>(100); // Type 的类型是 number 
+const b2: Boxx<string> = new Boxx('box') // 也可这样
+// b1.contents = 0
