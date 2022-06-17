@@ -256,3 +256,18 @@ class Deri extends B {
     name = "derived";
 }
 const der = new Deri();
+
+// 继承内置类型
+class MsgError extends Error {
+    constructor(m: string) {
+        super(m);
+        //注意： es5 target 版本一下需要 明确的设置原型（如下）， 用于编译成 es 5 版本一下的代码， 这样 sayHello 方法才会继承到 原型上。，或 msgError 是 MsgError 的实例；
+        Object.setPrototypeOf(this, MsgError.prototype); 
+    }
+    sayHello() {
+        return "hello" + this.message;
+    }
+}
+
+const msgError = new MsgError("hello");
+console.log(msgError.sayHello(),  msgError instanceof MsgError); //  
