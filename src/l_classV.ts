@@ -308,3 +308,37 @@ console.log(gg.sayName(gg), 666);
 // gg.sayHello(); // 访问不了
 const gson = new Hello();
 console.log(gson.ID, 123);
+
+// 类的静态成员
+
+/**
+ * 类可以有静态成员， 这些成员不与类的特定实例相关联， 他们可以通过类的构造函数对象本身来访问
+ *  注意：
+ *  特殊的静态名称不安全，避免使用：name,length,call等, TypeScript没有静态类的概念，因为我们还有函数和普通对象
+ *
+ */
+
+class MyC {
+    // private / protected / public 都可以修饰 静态属性和方法；
+    private static x = 0;
+    static qqNum: '2202'
+    abc = '666'
+    static printx() {
+        // console.log(MyC.x);
+        return "hello";
+    }
+}
+
+// console.log(MyC.x); // 私有属性
+console.log(MyC.qqNum);
+// console.log(MyC.abc); // 访问不了， 静态属性和非静态的区别就是能不能直接通过类访问；
+
+// MyC.printx()
+
+class SonClass extends MyC {
+    //  这些静态属性和方法也是可以继承的。 
+    //  Property 'sonProp' of type 'void' is not assignable to 'string' index type 'boolean | ((s: string) => boolean)'
+    sonProp = MyC.printx();
+}
+
+
