@@ -371,6 +371,38 @@ class Boxx<Type> {
     // 类的静态属性是不能 应用类类型的；
     // static defaultValue: Type;
 }
-const b1 = new Boxx<number>(100); // Type 的类型是 number 
-const b2: Boxx<string> = new Boxx('box') // 也可这样
+const b1 = new Boxx<number>(100); // Type 的类型是 number
+const b2: Boxx<string> = new Boxx("box"); // 也可这样
 // b1.contents = 0
+
+// 类运行时中的 this
+
+/**
+ *  TS 只是在我们开发的时候， 做一些 类型的检测， 他并不会影响 js 运行时的 行为
+ *
+ */
+
+class ClassA {
+    // 保证 类 类里的this指向方法
+    name = "class name";
+    lamdaFunc = () => {
+        //  方法1
+        // 箭头函数在 子类中 通过 super . 的方法访问不到, 且浪费内存，每个 实例都会有这样的副本。 
+        console.log("log", this.name);
+    };
+    thisArgFunc(this: ClassA) {
+        // 方法2， 可以节省内存，子类可以通过 super . 调用
+        console.log(this.name);
+    }
+    primaryFunc() {
+        console.log("primary log", this.name);
+    }
+}
+
+const ca = new ClassA();
+let objj = {
+    name: "obj name",
+    funcFunc: ca.primaryFunc,
+};
+console.log(objj.funcFunc(), 'ali');
+console.log(ca.thisArgFunc(), 'ali');
