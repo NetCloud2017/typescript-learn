@@ -238,3 +238,21 @@ dd.greet("reader");
 
 const bd: Base = dd;
 bd.greet();
+
+// 类的初始化顺序
+/*
+ *   1、基类的字段被初始化
+ *   2、基类构造函数运行
+ *   3、派生类的字段被初始化
+ *   4、派生类构造函数运行
+ */
+class B {
+    name = "base";
+    constructor() {
+        console.log("My name is " + this.name); // base
+    }
+}
+class Deri extends B {
+    name = "derived";
+}
+const der = new Deri();
