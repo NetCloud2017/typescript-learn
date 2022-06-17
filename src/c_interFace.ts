@@ -137,6 +137,8 @@ interface Bear extends Animal {
     hoppies: string;
 }
 const bear: Bear = {
+    numLegs: 4,
+    live: () => {},
     name: "halokity",
     hoppies: "honey",
     action: function () {},
@@ -175,5 +177,3 @@ const cc: ColorfulCircle = {
 2、接口同名 时是 拓展原因的字段， 而type 不能同名
 
 */
-
-

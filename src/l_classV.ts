@@ -198,7 +198,7 @@ class AnimalC {
     }
 }
 class Dog extends AnimalC {
-    woof(times: number) {
+    wooff(times: number) {
         for (let i = 0; i < times; i++) {
             console.log("woof!");
         }
@@ -262,7 +262,7 @@ class MsgError extends Error {
     constructor(m: string) {
         super(m);
         //注意： es5 target 版本一下需要 明确的设置原型（如下）， 用于编译成 es 5 版本一下的代码， 这样 sayHello 方法才会继承到 原型上。，或 msgError 是 MsgError 的实例；
-        Object.setPrototypeOf(this, MsgError.prototype); 
+        Object.setPrototypeOf(this, MsgError.prototype);
     }
     sayHello() {
         return "hello" + this.message;
@@ -270,4 +270,41 @@ class MsgError extends Error {
 }
 
 const msgError = new MsgError("hello");
-console.log(msgError.sayHello(),  msgError instanceof MsgError); //  
+console.log(msgError.sayHello(), msgError instanceof MsgError); //
+
+// 成员的可见性
+
+class Greet {
+    // *  public: 公开的，默认值。任何对象在任何地方都可以访问（默认情况下可不写）
+    public greet() {
+        // 可在内部 可以在 外面的实例， 也可以在子类中访问
+        console.log("hi!");
+    }
+    // *  protected : 受保护的。能在当前类或者子类中进行访问
+    protected sayHello() {
+        this.greet();
+    }
+    protected ID = "01";
+
+    // *  private : 私有的。只能在当前类中进行访问
+    // private和protected一样，但不允许从子类中访问该成员。TypeScript允许跨实例的私有访问
+
+    private name = "gogo";
+    sayName(other: Greet) {
+        //  跨实例的 私有访问 ， 这个 other 可以是 当前的实例， 也可以是子类的实例
+        return this.name;
+    }
+}
+class Hello extends Greet {
+    public ID: string = "12"; // 子类中修改继承的保护属性， 默认是 protected ;
+    constructor() {
+        super();
+        this.greet();
+    }
+}
+const gg = new Greet();
+gg.greet();
+console.log(gg.sayName(gg), 666);
+// gg.sayHello(); // 访问不了
+const gson = new Hello();
+console.log(gson.ID, 123);

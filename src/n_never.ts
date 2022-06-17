@@ -9,7 +9,7 @@ interface A {
     name: "a";
 }
 interface B {
-    name: "b";
+    name: string ;
 }
 interface C {
     name: "c";
@@ -29,7 +29,7 @@ function BelongType(kind: Kind) {
         default:
             // 这个穷尽性检测就是为了 当 Kind 加入了
             // 其他类型的时候可以将其拦截下来
-            const neverType: never = kind;
+            const neverType = kind as never;
             return neverType;
     }
 }

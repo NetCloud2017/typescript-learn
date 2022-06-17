@@ -203,11 +203,11 @@ myIdentity("123");
 class GenericNumber<NumType> {
     //类的 属性和 方法 初始化没有明确赋值会报错，可以设置 "strictPropertyInitialization": false,
     // 也可以 用 可选操作符 或 确定分配断言 进行初始化
-    // zeroValue?: NumType;
-    // add!: (x: NumType, y: NumType) => NumType;
+    zeroValue?: NumType;
+    add!: (x: NumType, y: NumType) => NumType;
 
-    zeroValue: NumType;
-    add: (x: NumType, y: NumType) => NumType;
+    // zeroValue: NumType;
+    // add: (x: NumType, y: NumType) => NumType;
 }
 // let myGeneric = new GenericNumber<number>();
 // myGeneric.zeroValue = 0;
