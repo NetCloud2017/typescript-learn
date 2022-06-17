@@ -387,7 +387,7 @@ class ClassA {
     name = "class name";
     lamdaFunc = () => {
         //  方法1
-        // 箭头函数在 子类中 通过 super . 的方法访问不到, 且浪费内存，每个 实例都会有这样的副本。 
+        // 箭头函数在 子类中 通过 super . 的方法访问不到, 且浪费内存，每个 实例都会有这样的副本。
         console.log("log", this.name);
     };
     thisArgFunc(this: ClassA) {
@@ -404,5 +404,32 @@ let objj = {
     name: "obj name",
     funcFunc: ca.primaryFunc,
 };
-console.log(objj.funcFunc(), 'ali');
-console.log(ca.thisArgFunc(), 'ali');
+console.log(objj.funcFunc(), "ali");
+console.log(ca.thisArgFunc(), "ali");
+
+// this 类型
+
+class AA1 {
+    content = "";
+    set(str: string) {
+        this.content = str;
+        //1、 this 作为返回值，谁调用是 谁的
+        return this;
+    }
+    thisArgDes(arg: this) {
+        //  this 作为 参数描述
+        //  用于 传进的 参数 的为当前的实例 对象 ，当前实例类的子类实例也可以
+        let result = arg.content === this.content;
+        console.log(result);
+        return result;
+    }
+}
+class AA2 extends AA1 {
+    logValue() {
+        console.log(this.content);
+    }
+}
+const aa1 = new AA1();
+const aa2 = new AA2();
+console.log("log this: ", aa2.set("aa2")); // this 为 AA2 的实例
+console.log(aa2.thisArgDes(aa2));
