@@ -321,8 +321,8 @@ console.log(gson.ID, 123);
 class MyC {
     // private / protected / public 都可以修饰 静态属性和方法；
     private static x = 0;
-    static qqNum: '2202'
-    abc = '666'
+    static qqNum: "2202";
+    abc = "666";
     static printx() {
         // console.log(MyC.x);
         return "hello";
@@ -336,9 +336,27 @@ console.log(MyC.qqNum);
 // MyC.printx()
 
 class SonClass extends MyC {
-    //  这些静态属性和方法也是可以继承的。 
+    //  这些静态属性和方法也是可以继承的。
     //  Property 'sonProp' of type 'void' is not assignable to 'string' index type 'boolean | ((s: string) => boolean)'
     sonProp = MyC.printx();
 }
 
+// 类的 static 区块；
+// # 命名的属性 只能在 target es2015 以上使用；
 
+class Foo {
+    static #count = 0; //  这样它会变成一个私有变量， （他和私有变量有什么区别呢？ ， 区块有什么用）
+    get count() {
+        return Foo.#count;
+    }
+    static {
+        // static  区块
+        try {
+            const lastInstance = {
+                length: 100,
+            };
+            Foo.#count += lastInstance.length;
+        } catch {}
+    }
+}
+// Foo.#count; 访问不了
