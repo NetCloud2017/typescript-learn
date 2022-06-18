@@ -433,3 +433,24 @@ const aa1 = new AA1();
 const aa2 = new AA2();
 console.log("log this: ", aa2.set("aa2")); // this 为 AA2 的实例
 console.log(aa2.thisArgDes(aa2));
+
+// 基于类型守卫的this
+/* 
+    我们可以在 类 和 接口 返回的 位置使用 this is Type 的语法， this is  是固定的写法 ， Type  是某种类型。 
+    当我们使用 if 语句作类型缩小的时候， 目标对象类型就缩小到我们指定的Type ， 这种现象称为 类型守卫的 this 
+*/
+
+class Boc<T> {
+    value?: T;
+    
+    hasValue(): this is { value: T } {
+        console.log(this);
+        
+        return this.value !== undefined;
+    }
+}
+const box = new Boc();
+box.value = "hello";
+if (box.hasValue()) {
+    console.log(box.value, box.hasValue());
+}
