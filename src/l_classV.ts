@@ -501,8 +501,28 @@ class AbstractSonClass extends AbstractClass {
 const ab = new AbstractSonClass();
 ab.getName();
 ab.printName();
-function grid(ctor: new () => AbstractClass) { // 抽象构造签名 用 结构化签名 new () => AbstractClass , 用 typeof  AbstractClass 报错 
+function grid(ctor: new () => AbstractClass) {
+    // 抽象构造签名 用 结构化签名 new () => AbstractClass , 用 typeof  AbstractClass 报错
     const instance = new ctor();
     instance.printName();
 }
 grid(AbstractSonClass); // 传的时候也不能传 抽象 类， 因为 不能实例化它
+
+// 类之间的关系
+class Person {
+    name: string = "";
+    age: number = 0;
+}
+class Humans {
+    name: string = "yada";
+    age: number = 666;
+    alive: boolean = false;
+}
+let human: Person = new Humans(); // 反正是被包含管理都可以赋值成功
+// 空类传什么都可以
+class Empty {}
+function fn1(x: Empty) {}
+fn1(window);
+fn1({});
+fn1(fn);
+fn1(100);
