@@ -471,3 +471,38 @@ console.log(par.x);
 // p.×= 200
 // par.y;
 // par.z;
+
+// 类表达式
+const someClass = class<Type> {
+    content: Type;
+    constructor(value: Type) {
+        this.content = value;
+    }
+};
+const m = new someClass("hello");
+console.log(m.content);
+
+// 抽象类 和成员
+
+// 抽象类不能被实例化， 只能作为基类被继承
+abstract class AbstractClass {
+    abstract getName(): string; // 抽象成员 这个方法要在衍生类中实现
+    printName() {
+        // 这种属于具体成员
+        console.log("Hello," + this.getName());
+    }
+}
+
+class AbstractSonClass extends AbstractClass {
+    getName() {
+        return "world";
+    }
+}
+const ab = new AbstractSonClass();
+ab.getName();
+ab.printName();
+function grid(ctor: new () => AbstractClass) { // 抽象构造签名 用 结构化签名 new () => AbstractClass , 用 typeof  AbstractClass 报错 
+    const instance = new ctor();
+    instance.printName();
+}
+grid(AbstractSonClass); // 传的时候也不能传 抽象 类， 因为 不能实例化它
