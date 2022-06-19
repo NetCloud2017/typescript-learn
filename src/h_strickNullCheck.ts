@@ -13,6 +13,6 @@ function doSomething(x: string | null) {
     
     //  例如 
     function donull (x?:number |null) {
-        console.log(x!.toFixed());
+        console.log(x!.toFixed()); // 非空断言
     }
 }
