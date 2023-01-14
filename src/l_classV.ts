@@ -458,12 +458,12 @@ if (box.hasValue()) {
 // 类的参数 属性
 class Params {
     constructor(
-        //  用 public 等这些关键字声明的 构造函数参数 ， 既成为 参数 也是对应 类的（公共 | 保护 | 私有) 属性；
+        //  用 public 等这些关键字声明的 构造函数参数 ， 既成为 参数 也是对应 类的（公共 | 保护 | 私有) 属性；类被调用后这里的属性会被隐式赋值。
         public readonly x: number,
         protected y: number,
         private z: number
     ) {
-        this.x = x;
+        // this.x = x; 这里的赋值语句也可以不写，
     }
 }
 const par = new Params(100, 300, 400);
